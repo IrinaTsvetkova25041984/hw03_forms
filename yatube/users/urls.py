@@ -19,7 +19,7 @@ urlpatterns = [
         name='login'
     ),
     path(
-        'password_change/', 
+        'password_change/',
         LoginView.as_view(template_name='users/password_change.html'),
         name='password_change'
     ),
@@ -28,4 +28,4 @@ urlpatterns = [
         LoginView.as_view(template_name='users/password_reset.html'),
         name='password_reset'
     ),
-] 
+]

@@ -8,7 +8,6 @@ from .models import Group, Post, User
 from .forms import PostForm
 
 
-
 def index(request):
     posts = Post.objects.select_related('group')[:settings.LIMIT_POSTS]
     post_list = Post.objects.all()
@@ -24,7 +23,6 @@ def index(request):
 
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
-    posts = Post.objects.select_related('group')[:settings.LIMIT_POSTS]
     post_list = Post.objects.all()
     paginator = Paginator(post_list, settings.LIMIT_POSTS)
     page_number = request.GET.get('page')
@@ -43,7 +41,7 @@ def profile(request, username):
     paginator = Paginator(post_list, settings.LIMIT_POSTS)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    post_number = post_list.count()
+    # post_number = post_list.count()
     context = {
         'author': author,
         'posts': posts,
@@ -59,7 +57,8 @@ def post_detail(request, post_id):
         'post': post,
         'author_posts': author_posts.count(),
     }
-    return render(request, 'posts/post_detail.html', context) 
+    return render(request, 'posts/post_detail.html', context)
+
 
 @login_required
 def post_create(request):
@@ -71,6 +70,7 @@ def post_create(request):
         return redirect('posts:profile', username=request.user)
     return render(request, 'posts/post_create.html', {'form': form})
 
+
 @login_required
 def post_edit(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -81,4 +81,6 @@ def post_edit(request, post_id):
         form.save()
         return redirect('posts:post_detail', post_id=post_id)
     form = PostForm(instance=post)
-    return render(request, 'posts/post_create.html', {'form': form, 'post': post})
+    return render(
+        request, 'posts/post_create.html', {'form': form, 'post': post}
+    )
