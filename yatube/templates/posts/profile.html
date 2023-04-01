@@ -16,16 +16,18 @@
             <li>
               Дата публикации: {{ post.pub_date|date:"d E Y" }} 
             </li>
+            <li>
+              {% if post.group %}
+                Группа: {{ group.title }}  
+                <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
+              {% endif %}
+              </li>
           </ul>
           <p>{{ post.text }} </p>
           <a href="{% url 'posts:post_edit' post.id %}">подробная информация </a>
         </article>
-          {% if post.group %}
-              Группа: {{ group.title }}      
-              <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
-          {% endif %}
           {% if not forloop.last %}<hr>{% endif %}
         {% endfor %}        
-      {% include 'posts/paginator.html' %}
+      {% include 'includes/paginator.html' %}
     </div>
 {% endblock %} 

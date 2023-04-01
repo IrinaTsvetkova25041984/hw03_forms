@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
+from django.conf import settings
+
 User = get_user_model()
 
 
@@ -15,7 +17,7 @@ class Group(models.Model):
     )
     description = models.TextField('Описание')
 
-    class Meta():
+    class Meta:
         default_related_name = 'groups'
 
     def __str__(self):
@@ -48,8 +50,8 @@ class Post(models.Model):
         help_text='Группа, к которой будет относиться пост'
     )
 
-    class Meta():
+    class Meta:
         ordering = ('-pub_date',)
 
     def __str__(self):
-        return self.text[:15]
+        return self.text[:settings.LIMIT_TEXT]

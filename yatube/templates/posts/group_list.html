@@ -17,10 +17,11 @@
         Дата публикации: {{ post.pub_date|date:"d E Y" }}
       </li>
     </ul>      
-    <p>{{ post.text|linebreaksbr }}</p> 
+    <p>{{ post.text|linebreaksbr }}</p>
+    <a href="{% url 'posts:post_detail' post.pk %}">подробная информация </a> 
+    {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
   </article>
-  {% if not forloop.last %}<hr>{% endif %}
-  {% endfor %}
+  {% include 'includes/paginator.html' %}
 </div>
-{% include 'posts/paginator.html' %}
 {% endblock %}
