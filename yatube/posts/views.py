@@ -7,11 +7,9 @@ from .utils import paginations
 
 
 def index(request):
-    posts = Post.objects.select_related('group')
     post_list = Post.objects.all()
     page_obj = paginations(request, post_list)
     context = {
-        'posts': posts,
         'page_obj': page_obj,
     }
     return render(request, 'posts/index.html', context)
@@ -19,7 +17,7 @@ def index(request):
 
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
-    post_list = Post.objects.all()
+    post_list = group.posts.all()
     page_obj = paginations(request, post_list)
     context = {
         'group': group,
@@ -31,11 +29,10 @@ def group_posts(request, slug):
 def profile(request, username):
     author = get_object_or_404(User, username=username)
     post_list = author.post.all()
-    posts = Post.objects.all()
+    post = Post.objects.all()
     page_obj = paginations(request, post_list)
     context = {
         'author': author,
-        'posts': posts,
         'page_obj': page_obj,
     }
     return render(request, 'posts/profile.html', context)
@@ -69,7 +66,6 @@ def post_edit(request, post_id):
     if form.is_valid():
         form.save()
         return redirect('posts:post_detail', post_id=post_id)
-    form = PostForm(instance=post)
     return render(
         request, 'posts/post_create.html', {'form': form, 'post': post}
     )

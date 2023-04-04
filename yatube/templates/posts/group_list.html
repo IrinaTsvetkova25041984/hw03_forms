@@ -19,9 +19,9 @@
     </ul>      
     <p>{{ post.text|linebreaksbr }}</p>
     <a href="{% url 'posts:post_detail' post.pk %}">подробная информация </a> 
-    {% if not forloop.last %}<hr>{% endif %}
-    {% endfor %}
   </article>
+  {% if not forloop.last %}<hr>{% endif %}
+  {% endfor %}
   {% include 'includes/paginator.html' %}
 </div>
 {% endblock %}
