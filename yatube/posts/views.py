@@ -29,7 +29,6 @@ def group_posts(request, slug):
 def profile(request, username):
     author = get_object_or_404(User, username=username)
     post_list = author.post.all()
-    post = Post.objects.all()
     page_obj = paginations(request, post_list)
     context = {
         'author': author,
