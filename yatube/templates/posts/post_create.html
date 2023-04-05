@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
+
 {% block title %}
   {% if post_id %}Редактировать запись{% else %}Добавить запись{% endif %}
 {% endblock %}
+
 {% block content %}
   <div class="row justify-content-center">
     <div class="col-md-8 p-5">
@@ -46,12 +48,14 @@
                 {% endif %}
               </label>
               <div class="form-group row my-3 p-3">
+                <label for="id_group">
                 {{ field }}
                 {% if field.help.text %}
                   <small id="{{ field.id_for_label }}-help" class="form-text text-muted">
                     {{ field.help_text|safe }}
                   </small>
                 {% endif %}
+                </label>
               </div>
             </div>
           {% endfor %}
