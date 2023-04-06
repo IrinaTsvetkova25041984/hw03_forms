@@ -10,9 +10,11 @@
         <article>
           <ul>
             {% if post.group %}
-              Группа: {{ post.group.title }}
-              <p><a href="{% url 'posts:group_list' post.group.slug %}">
-                все записи группы</a></p>
+              <li>
+                Группа: {{ post.group.title }}
+                <a href="{% url 'posts:group_list' post.group.slug %}">
+                  все записи группы</a>
+              </li>
             {% endif %}   
             <li>
               Автор: {{ author.get_full_name }}
